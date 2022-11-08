@@ -1,0 +1,17 @@
+body {
+    background-color: #d3f3f1;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #abc9e9;
+}
+
+.login-form {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock title %}
+
+{% block content %}
+    <div class="col-3 login-form">
+        <h6>Don't you have an account! <a href="{% url 'membership:signup' %}">Create one</a></h6>
+        <br>
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">{{ form.fields.username.label }}</label>
+                <input type="text" class="form-control" name="username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">{{ form.fields.password.label }}</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+    Sign Up
+{% endblock title %}
+{% block content %}
+    <h6>Sign up</h6>
+    {% if form.error_messages %}
+        {% for key,value in form.errors.items %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ value }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {% for item in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ item.label }}</label>
+                {% if item.name == "password1" or item.name == "password2" %}
+                    <input type="password" class="form-control" name="{{ item.name }}">
+                {% else %}
+                    <input type="text" class="form-control" name="{{ item.name }}">
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Sign up</button>
+    </form>
+{% endblock content %}
