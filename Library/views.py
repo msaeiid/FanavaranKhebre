@@ -1,23 +1,29 @@
 from random import lognormvariate
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponseNotFound
-from django.shortcuts import get_object_or_404, render, redirect, get_list_or_404
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView
-
-from Library import models
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 from Library.models import Book, Order
 
 
 # Create your views here.
 
 
-class BookListView(LoginRequiredMixin, ListView):
-    model = models.Book
-    context_object_name = "books"
-    template_name = "Library/list.html"
+@login_required
+def get_book_search(request):
+    if request.method == "GET":
+        search = request.GET.get('search')
+        if search is None:
+            books = Book.objects.all()
+        else:
+            books = Book.objects.filter(Q(title__startswith=search) |
+                                        Q(subject__startswith=search) |
+                                        Q(writer__f_name__startswith=search) |
+                                        Q(writer__l_name__startswith=search))
+        context = {'books': books}
+        return render(request, template_name="Library/list.html", context=context)
 
 
 @login_required
