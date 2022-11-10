@@ -20,5 +20,8 @@ from Library import views
 app_name = 'library'
 
 urlpatterns = [
-    path('list/', views.BookListView.as_view(), name='book_list')
+    path('booklist/', views.BookListView.as_view(), name='book_list'),
+    path('order/add/<int:book_id>', views.order_add, name="order_book"),
+    path('order/list', views.order_list, name="my_order_list"),
+    path('order/remove/<int:order_id>', views.order_remove, name="order_remove"),
 ]

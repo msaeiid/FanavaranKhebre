@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}
+    My order list
+{% endblock title %}
+{% block content %}
+    {% if my_order %}
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Subject
+                </th>
+                <th>
+                    state
+                </th>
+                <th>
+                    order date
+                </th>
+                <th>
+                    last update
+                </th>
+                <th>
+                </th>
+            </tr>
+            {% for order in my_order %}
+                <tr>
+                    <td>
+                        {{ order.book.title }}
+                    </td>
+                    <td>
+                        {{ order.book.subject |truncatechars:20 }}
+                    </td>
+                    <td>
+                        {{ order.state }}
+                    </td>
+                    <td>
+                        {{ order.create_date|date }}
+                    </td>
+                    <td>
+                        {{ order.update_date|date }}
+                    </td>
+                    <td>
+                        {% if order.state  == "approved" %}
+                            <a href="{% url 'library:order_remove' order.id %}" class="btn btn-md btn-danger">X</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Your order list is empty!
+        </div>
+    {% endif %}
+{% endblock content %}

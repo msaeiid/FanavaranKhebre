@@ -5,11 +5,20 @@
 {% block content %}
     {% for book in books %}
         <div class="card" style="display: inline-grid">
-            <img src="{{ book.image.url }}" class="card-img-top" width="150" height="200">
+            {% if book.image %}
+                <img src="{{ book.image.url }}" class="card-img-top" width="150" height="200">
+            {% endif %}
             <div class="card-body">
+                <span class="badge text-bg-info">{{ book.writer }}</span>
+                <span class="badge text-bg-info">{{ book.category }}</span>
                 <h5 class="card-title">{{ book.title }}</h5>
                 <p class="card-text">{{ book.subject |truncatechars:20 }}</p>
-                <a href="#" class="btn btn-primary">get</a>
+                {% if book.is_order_allowed %}
+                    <a href="{% url 'library:order_book' book.id %}" class="btn btn-success">+</a>
+                    <span class="badge text-bg-info">{{ book.number_of_available }} available</span>
+                {% else %}
+                    <h4>Unavailable</h4>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

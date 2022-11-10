@@ -8,6 +8,7 @@ body {
 
 .card {
     background-color: #abc9e9;
+    margin: 2px;
 }
 
 .login-form {
